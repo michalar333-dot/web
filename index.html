@@ -595,7 +595,7 @@ footer .hand{font-size:30px;color:var(--ink)}
     const btn=$("submitBtn"); btn.disabled=true; btn.textContent="Odesílám…";
     const body = new URLSearchParams({jmeno:name, kontakt:contact, poznamka:note,
       polozky: basket.map(i=>i.n+"× "+QUOTES[i.q].t+" – "+COLORS[i.c][0]).join("\n"),
-      kusy: String(pcs), cena: String(pcs*PRICE)});
+      kusy: String(pcs), cena: String(pcs*PRICE), cas: String(Math.round(performance.now()))});
     fetch(SHEET_URL, {method:"POST", mode:"no-cors", body})
       .then(()=>{
         $("sentMsg").textContent = "Díky, "+name+"! Rezervace dorazila. Ozvu se ti na "+contact+" s termínem dodání a platbou.";
