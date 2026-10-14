@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>*{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<title>mám capacitu – kšiltovky s hláškou</title>
+<meta name="description" content="Kšiltovky s ručně psanou hláškou pro právníky a markeťáky. Předprodej 390 Kč, rezervace zdarma.">
+<meta property="og:title" content="mám capacitu – Kapacitu nemám. Capacitu jo.">
+<meta property="og:description" content="Kšiltovky s ručně psanou hláškou pro právníky a markeťáky. Předprodej 390 Kč, rezervace zdarma.">
+<meta property="og:image" content="https://mamcapacitu.cz/img/og.jpg">
+<meta property="og:url" content="https://mamcapacitu.cz/">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: white page with black hand-lettering like the Instagram slides; logo as hero, real cap photo preview beside the picker, reservation basket at the end. */
+:root{
+  --paper:#ffffff; --card:#ffffff; --ink:#141414; --muted:#5f5f5c; --line:#e2e1dc;
+  --thread:#141414; --thread-soft:#f3f2ee; --ok:#2f6b3a;
+  --hand:"Amatic SC","Segoe Print",cursive;
+  --sans:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#131313; --card:#1c1c1b; --ink:#f2f0ea; --muted:#a8a69f; --line:#333230;
+  --thread:#f2f0ea; --thread-soft:#242422; --ok:#7fc58b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#131313; --card:#1c1c1b; --ink:#f2f0ea; --muted:#a8a69f; --line:#333230;
+  --thread:#f2f0ea; --thread-soft:#242422; --ok:#7fc58b; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1040px;margin:0 auto}
+a{color:var(--thread)}
+:focus-visible{outline:2px solid var(--thread);outline-offset:3px;border-radius:6px}
+h1,h2,h3{text-wrap:balance;margin:0;line-height:1.05;font-family:var(--hand);font-weight:700;letter-spacing:.03em}
+.hand{font-family:var(--hand);font-weight:700}
+.label{font-family:var(--hand);font-size:24px;letter-spacing:.05em;color:var(--ink);font-weight:700}
+
+/* header */
+.top{display:flex;justify-content:space-between;align-items:center;padding-block:18px;gap:12px}
+.top .mini{display:flex;align-items:center;gap:10px;font:700 26px var(--hand);text-decoration:none;color:var(--ink)}
+.top .mini svg{width:48px;height:48px}
+.top nav{display:flex;gap:22px;font:700 24px var(--hand);letter-spacing:.03em}
+.top nav a{color:var(--muted);text-decoration:none}
+.top nav a:hover{color:var(--ink)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:40px;align-items:center;padding-block:28px 56px}
+.logo-big{width:100%;max-width:420px;color:var(--ink)}
+.logo-big svg{width:100%;height:auto;display:block}
+.hero h1{font-size:clamp(52px,8vw,88px);line-height:.95}
+.hero p{color:var(--muted);max-width:44ch;margin:16px 0 0;font-size:18px}
+.hero .row{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:26px}
+.btn{appearance:none;border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);font:700 25px/1 var(--hand);letter-spacing:.04em;
+  padding:12px 24px;border-radius:999px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{background:var(--paper);color:var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--thread-soft);color:var(--ink);border-color:var(--ink)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.price{font:700 40px var(--hand)}
+.price small{font-family:var(--sans);font-weight:400;font-size:14px;color:var(--muted);margin-left:6px}
+.tag{display:inline-block;border:1.5px dashed var(--ink);border-radius:999px;padding:2px 14px;font:700 21px var(--hand);letter-spacing:.04em}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);padding-block:26px;margin-bottom:64px}
+.step{display:flex;gap:14px;align-items:flex-start}
+.step .n{font:700 46px/1 var(--hand);min-width:24px}
+.step h3{font-size:30px;margin-bottom:2px}
+.step p{margin:0;color:var(--muted);font-size:15px}
+
+/* configurator */
+section{margin-bottom:72px}
+.sec-h{display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.sec-h h2{font-size:clamp(44px,6vw,64px)}
+.sec-h p{margin:0;color:var(--muted)}
+.config{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px;align-items:start}
+.preview{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);background:var(--card);border:1.5px solid var(--line);border-radius:22px;padding:22px}
+.photo{position:relative;container-type:inline-size;background:#fff;border-radius:14px;overflow:hidden}
+.photo img{width:100%;height:auto;display:block}
+.embroid{position:absolute;left:47%;top:37%;width:34%;transform:translate(-50%,-50%) rotate(-3deg) skewY(-2deg);
+  text-align:center;font:700 6.4cqw/0.95 var(--hand);letter-spacing:.02em;text-wrap:balance;
+  text-shadow:0 .4px 0 rgba(0,0,0,.25),0 -.4px 0 rgba(255,255,255,.18);pointer-events:none}
+.embroid.long{font-size:5.2cqw}
+.photo.mock{background:#ededeb}
+.photo.flat{background:var(--cap);aspect-ratio:760/490;border-radius:14px}
+.photo.flat .embroid{left:50%;top:50%;width:70%;transform:translate(-50%,-50%);font-size:9cqw}
+.pvnote{margin:8px 0 0;font-size:13px;color:var(--muted)}
+.preview .meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:10px;font:700 26px var(--hand)}
+.preview .meta b{font-weight:700}
+.preview .meta span:last-child{color:var(--muted)}
+.group{margin-bottom:26px}
+.group .label{margin-bottom:10px;display:block}
+.roles{display:flex;flex-wrap:wrap;gap:10px}
+.role{appearance:none;border:1.5px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;
+  padding:8px 20px 9px;font:700 26px/1 var(--hand);letter-spacing:.03em;cursor:pointer}
+.role:hover{background:var(--thread-soft)}
+.role[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.role[disabled]{border-style:dashed;color:var(--muted);border-color:var(--muted);cursor:default;background:transparent}
+.role small{font:400 13px var(--sans);margin-left:4px}
+.quotes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.q[hidden]{display:none}
+.q{display:flex;flex-direction:column;align-items:stretch;gap:0;text-align:center;background:var(--card);padding:0;overflow:hidden;
+  border:1.5px solid var(--line);border-radius:14px;cursor:pointer;color:var(--ink);font:inherit}
+.q:hover{border-color:var(--muted)}
+.q[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 1.5px var(--ink)}
+.q .th{aspect-ratio:16/10;overflow:hidden;background:#ededeb}
+.q .th img{width:100%;height:100%;object-fit:cover;object-position:50% 34%;transform:scale(1.55);transform-origin:50% 34%;display:block}
+.q .t{font:700 19px/1.05 var(--hand);letter-spacing:.02em;padding:7px 6px 8px;text-wrap:balance;overflow-wrap:anywhere}
+.q[disabled]{cursor:default;border-style:dashed}
+.q[disabled] .th{display:grid;place-items:center;background:var(--thread-soft);font:700 22px var(--hand);color:var(--muted)}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:12px;max-width:340px}
+.sw{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line);cursor:pointer;padding:0;position:relative}
+.sw[aria-pressed="true"]{outline:2px solid var(--ink);outline-offset:3px}
+.colorname{margin-top:10px;font:700 24px var(--hand)}
+.qty{display:inline-flex;align-items:center;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden}
+.qty button{background:transparent;border:0;color:var(--ink);font:600 20px var(--sans);width:44px;height:42px;cursor:pointer}
+.qty output{min-width:34px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums}
+.addrow{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+
+/* basket + form */
+.basket{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:36px;align-items:start}
+.items{background:var(--card);border:1.5px solid var(--line);border-radius:22px;padding:8px 20px}
+.item{display:grid;grid-template-columns:28px minmax(0,1fr) auto auto;gap:12px;align-items:center;padding-block:14px;border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:0}
+.item .dot{width:24px;height:24px;border-radius:50%;border:1px solid var(--line)}
+.item .t{font:700 26px/1.05 var(--hand)}
+.item .c{font-size:13px;color:var(--muted)}
+.item .n{font-variant-numeric:tabular-nums;font-size:15px;white-space:nowrap}
+.item .x{background:none;border:0;color:var(--muted);cursor:pointer;font-size:20px;padding:4px 6px}
+.item .x:hover{color:var(--ink)}
+.empty{padding-block:30px;text-align:center;color:var(--muted)}
+.empty .hand{font-size:32px;color:var(--ink);display:block}
+.total{display:flex;justify-content:space-between;align-items:baseline;padding:16px 4px 0;font:700 28px var(--hand)}
+.total span:last-child{font-size:38px}
+.note{font-size:14px;color:var(--muted);margin:8px 4px 0}
+form{display:grid;gap:14px}
+.field{display:grid;gap:6px}
+.field label{font:700 24px var(--hand);letter-spacing:.03em}
+.field input,.field textarea{font:inherit;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:11px 13px;width:100%}
+.field input:focus,.field textarea:focus{border-color:var(--ink);outline:none}
+.field small{color:var(--muted);font-size:13px}
+.err{color:#b3261e;font-size:14px;min-height:1em;margin:0}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .err{color:#ff8a80}}
+:root[data-theme="dark"] .err{color:#ff8a80}
+
+.done{background:var(--thread-soft);border:1.5px solid var(--ink);border-radius:22px;padding:22px;display:grid;gap:14px}
+.done h3{font-size:40px}
+.done pre{white-space:pre-wrap;font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin:0;max-height:260px;overflow:auto}
+.done .row{display:flex;flex-wrap:wrap;gap:10px}
+.done ol{margin:0;padding-left:20px;color:var(--ink)}
+
+/* spec */
+.spec{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px 48px;border-top:1.5px solid var(--ink);padding-top:22px}
+.spec h3{font-size:30px;margin-bottom:6px}
+.spec ul{margin:0;padding:0;list-style:none;display:grid;gap:6px}
+.spec li{padding-left:22px;position:relative}
+.spec li::before{content:"–";position:absolute;left:0;font-family:var(--hand);font-weight:700}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.legal{font-size:13px;color:var(--muted);margin:0}
+.legal a,.prov a{color:inherit}
+.prov{text-align:right}
+/* faq */
+.faq{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 36px}
+details{border-bottom:1.5px solid var(--line);padding-block:14px}
+summary{cursor:pointer;font:700 28px/1.1 var(--hand);letter-spacing:.02em;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::after{content:"+";font-size:30px;line-height:1}
+details[open] summary::after{content:"–"}
+details p{color:var(--muted);margin:8px 0 0}
+
+footer{border-top:1.5px solid var(--ink);padding-block:24px 40px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:14px}
+footer .hand{font-size:30px;color:var(--ink)}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:999px;font-weight:600;font-size:15px;z-index:10}
+
+@media (max-width:820px){
+  .hero,.config,.basket,.faq,.spec{grid-template-columns:minmax(0,1fr)}
+  .prov{text-align:left}
+  .hero{gap:20px;padding-block:8px 40px}
+  .logo-big{max-width:300px;margin:0 auto}
+  .steps{grid-template-columns:minmax(0,1fr)}
+  .preview{position:static}
+  .top nav{display:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  .cap-fill{transition:fill .25s ease}
+  .btn,.q{transition:background .15s,border-color .15s}
+}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="mini" href="#top" aria-label="mám capacitu – nahoru"><span class="logo-slot"></span>mám capacitu</a>
+    <nav>
+      <a href="#vyber">Vybrat čepici</a>
+      <a href="#kstiltovka">Kšiltovka</a>
+      <a href="#rezervace">Rezervace</a>
+      <a href="#faq">Otázky</a>
+      <a href="https://www.instagram.com/mamcapacitu.cz/" target="_blank" rel="noopener">Instagram</a>
+    </nav>
+  </header>
+
+  <div class="hero" id="top">
+    <div class="logo-big logo-slot" role="img" aria-label="Logo mám capacitu"></div>
+    <div>
+      <span class="tag">Předprodej · první várka</span>
+      <h1 style="margin-top:14px">Kapacitu nemám. Capacitu jo.</h1>
+      <p>Kšiltovky s hláškou pro lidi, co mají v kalendáři plno a v hlavě ještě víc. Každý nápis je ručně psaný a pak vyšitý na bavlněné kšiltovce ve vintage stylu.</p>
+      <div class="row">
+        <a class="btn" href="#vyber">Vybrat hlášku</a>
+        <span class="price">390 Kč <small>za kus · teď jen rezervace</small></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step"><span class="n">1</span><div><h3>Rezervuješ</h3><p>Vybereš hlášku a barvu. Nic neplatíš.</p></div></div>
+    <div class="step"><span class="n">2</span><div><h3>Ozvu se</h3><p>Napíšu ti termín dodání a pošlu platbu.</p></div></div>
+    <div class="step"><span class="n">3</span><div><h3>Nosíš</h3><p>Zaplatíš, vyšiju a pošlu. Kapacita nehraje roli.</p></div></div>
+  </div>
+
+  <section id="vyber">
+    <div class="sec-h">
+      <h2>Vyber si svou</h2>
+      <p>Každá hláška jde na kteroukoli z 11 vintage barev.</p>
+    </div>
+    <div class="config">
+      <div class="preview" aria-live="polite">
+        <div class="photo" id="photo">
+          <img id="capImg" alt="" width="760" height="490">
+          <span class="embroid" id="capText" aria-hidden="true"></span>
+        </div>
+        <p class="pvnote" id="pvNote">Orientační náhled, fotka výšivky v této barvě se připravuje.</p>
+        <div class="meta"><span id="pvQuote"><b></b></span><span id="pvColor"></span></div>
+      </div>
+
+      <div>
+        <div class="group">
+          <span class="label">1 · Kdo jsi?</span>
+          <div class="roles" id="roles" role="group" aria-label="Profese"></div>
+        </div>
+        <div class="group">
+          <span class="label">2 · Hláška</span>
+          <div class="quotes" id="quotes"></div>
+        </div>
+        <div class="group">
+          <span class="label">3 · Barva kšiltovky</span>
+          <div class="swatches" id="swatches"></div>
+          <div class="colorname" id="colorName"></div>
+        </div>
+        <div class="group">
+          <span class="label">4 · Počet</span>
+          <div class="addrow">
+            <div class="qty">
+              <button type="button" id="qMinus" aria-label="Ubrat kus">−</button>
+              <output id="qOut">1</output>
+              <button type="button" id="qPlus" aria-label="Přidat kus">+</button>
+            </div>
+            <button class="btn" type="button" id="addBtn">Přidat do rezervace</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kstiltovka">
+    <div class="sec-h">
+      <h2>Co dostaneš</h2>
+      <p>Parametry a péče</p>
+    </div>
+    <div class="spec">
+      <div>
+        <h3>Kšiltovka</h3>
+        <ul>
+          <li>100% předepraná bavlna, 175 g/m²</li>
+          <li>Nízký profil a vintage vzhled</li>
+          <li>Předtvarovaný kšilt z recyklovaného materiálu</li>
+          <li>Nevyztužené panely, takže je měkká a pohodlná</li>
+          <li>6 obšitých větracích otvorů</li>
+          <li>Látkový pásek s kovovým zapínáním</li>
+          <li>Štítek Tear Away, jde snadno odtrhnout</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Výšivka</h3>
+        <ul>
+          <li>Ručně psaná hláška převedená do výšivky</li>
+          <li>Tmavé čepice mají bílou nit, světlé černou</li>
+        </ul>
+        <h3 style="margin-top:18px">Péče</h3>
+        <ul class="care">
+          <li>Jen ruční praní</li>
+          <li>Nežehlit</li>
+          <li>Nesušit v sušičce</li>
+          <li>Nečistit chemicky</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="rezervace">
+    <div class="sec-h">
+      <h2>Tvoje rezervace</h2>
+      <p>Celá kancelář? Přidej klidně víc kusů a barev.</p>
+    </div>
+    <div class="basket">
+      <div>
+        <div class="items" id="items"></div>
+        <p class="note">Teď neplatíš nic. Ohledně termínu dodání a ceny dopravy se ti ozvu.</p>
+      </div>
+      <div id="formWrap">
+        <form id="resForm" novalidate>
+          <div class="field">
+            <label for="fName">Jméno</label>
+            <input id="fName" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="fContact">E-mail nebo Instagram</label>
+            <input id="fContact" autocomplete="email" required placeholder="např. jana@email.cz nebo @jana">
+            <small>Sem se ti ozvu s termínem dodání a platbou.</small>
+          </div>
+          <div class="field">
+            <label for="fNote">Poznámka <span style="font-weight:400;color:var(--muted)">(nepovinné)</span></label>
+            <textarea id="fNote" rows="3" placeholder="Třeba nápad na hlášku pro tvou profesi"></textarea>
+          </div>
+          <div class="hp" aria-hidden="true"><label for="fWeb">Nevyplňuj</label><input id="fWeb" tabindex="-1" autocomplete="off"></div>
+          <p class="err" id="fErr"></p>
+          <button class="btn" type="submit" id="submitBtn">Odeslat rezervaci</button>
+          <p class="legal">Odesláním rezervace beru na vědomí <a href="ochrana-udaju.html" target="_blank">zpracování osobních údajů</a>. Rezervace je nezávazná a nic se teď neplatí.</p>
+        </form>
+        <div class="done" id="sent" hidden>
+          <h3>Rezervace je u mě 🧢</h3>
+          <p id="sentMsg" style="margin:0"></p>
+          <pre id="sentSummary"></pre>
+          <div class="row"><button class="btn ghost" type="button" id="againBtn">Nová rezervace</button></div>
+        </div>
+        <div class="done" id="done" hidden>
+          <h3>Skoro hotovo ✍️</h3>
+          <ol>
+            <li>Zkopíruj si shrnutí rezervace.</li>
+            <li>Otevři zprávy na Instagramu a vlož ho mi. Teprve tím je rezervace odeslaná.</li>
+          </ol>
+          <pre id="summary"></pre>
+          <div class="row">
+            <button class="btn" type="button" id="copyBtn">Zkopírovat shrnutí</button>
+            <a class="btn ghost" href="https://ig.me/m/mamcapacitu.cz" target="_blank" rel="noopener">Otevřít Instagram zprávy</a>
+          </div>
+          <p class="note" style="margin:0">Instagram: <b>@mamcapacitu.cz</b> · <button type="button" id="backBtn" style="background:none;border:0;color:var(--thread);font:inherit;cursor:pointer;padding:0;text-decoration:underline">upravit rezervaci</button></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="sec-h"><h2>Otázky</h2></div>
+    <div class="faq">
+      <details><summary>Kolik to stojí?</summary><p>V předprodeji 390 Kč za kus. Dopravu domluvíme podle toho, kam to poletí.</p></details>
+      <details><summary>Platím teď?</summary><p>Ne. Rezervace je zdarma a nezávazná. Zaplatíš, až se ti ozvu.</p></details>
+      <details><summary>Kdy kšiltovku dostanu?</summary><p>Termín dodání ti napíšu, jakmile budu mít potvrzenou výrobu. Ozvu se na kontakt, který vyplníš v rezervaci.</p></details>
+      <details><summary>Jakou má kšiltovka velikost?</summary><p>Univerzální. Vzadu je látkový pásek s kovovým zapínáním, takže sedne většině hlav, i těm přetíženým.</p></details>
+      <details><summary>Jak se o ni starat?</summary><p>Jen ruční praní. Nežehlit, nesušit v sušičce a nečistit chemicky. Výšivka ti tak vydrží.</p></details>
+      <details><summary>Kdo hlášky vymýšlí?</summary><p>Míša. Studuje práva, dělá marketing a každý nápis píše ručně, než jde do výšivky.</p></details>
+      <details><summary>Kdy přijdou doktoři?</summary><p>Už se na tom pracuje. Napiš do poznámky, jakou hlášku bys chtěl/a, nebo jakou profesi dál.</p></details>
+      <details><summary>Hromadná objednávka?</summary><p>Jasně. Přidej do rezervace víc kusů a barev a napiš do poznámky název kanceláře.</p></details>
+    </div>
+  </section>
+
+  <footer>
+    <span class="hand">Kapacitu nemám. Capacitu jo.</span>
+    <span class="prov">Provozovatel: Bc. Michala Reiserová, IČO 29614589<br>
+      <a href="ochrana-udaju.html" target="_blank">Ochrana osobních údajů</a> · <a href="https://www.instagram.com/mamcapacitu.cz/" target="_blank" rel="noopener">@mamcapacitu.cz</a></span>
+  </footer>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<template id="logoTpl">
+<svg viewBox="0 0 1208.2 1208.9" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<g fill="none" stroke="currentColor" stroke-width="9.90" stroke-linecap="round" stroke-linejoin="round">
+<path d="M1100.2 603.1 L1100.2 592.7 L1099.6 581.7 L1098.0 570.4 L1096.2 559.5 L1094.6 549.3 L1092.8 539.4 L1091.4 528.8 L1089.5 517.3 L1087.4 505.3 L1084.9 493.7 L1082.7 482.9 L1081.0 472.1 L1079.0 460.9 L1076.2 449.3 L1071.8 438.3 L1067.2 428.4 L1063.1 419.1 L1059.1 409.8 L1054.7 399.8 L1048.4 389.7 L1042.2 379.8 L1036.8 370.3 L1032.3 360.9 L1027.8 351.0 L1022.1 340.6 L1015.8 330.1 L1009.7 320.2 L1004.2 311.1 L998.4 302.7 L991.6 294.2 L983.9 285.4 L975.6 276.9 L967.5 269.1 L959.5 262.4 L951.7 255.5 L943.5 247.7 L934.9 239.1 L926.5 230.7 L918.1 223.8 L910.4 217.0 L902.8 209.8 L894.5 202.0 L885.2 194.5 L875.3 188.6 L865.9 183.5 L856.7 178.7 L847.1 173.4 L836.4 168.0 L825.0 163.2 L814.3 158.9 L804.5 154.8 L795.1 150.2 L785.2 145.5 L774.7 140.5 L764.2 135.9 L754.2 132.1 L744.8 128.6 L734.7 126.1 L723.8 123.2 L712.0 120.3 L700.2 118.3 L688.9 117.2 L677.9 117.0 L666.7 115.9 L655.0 114.1 L643.2 112.1 L632.0 111.2 L621.7 111.2 L611.8 110.8 L601.4 109.6 L590.2 108.3 L578.9 108.4 L567.9 109.9 L557.3 111.8 L546.4 113.4 L534.6 114.4 L522.3 116.6 L510.4 119.3 L499.3 122.4 L488.8 125.2 L478.3 127.3 L467.6 129.6 L456.8 131.9 L446.5 134.9 L437.0 138.3 L427.7 142.2 L417.8 146.1 L407.0 150.0 L396.0 154.6 L385.3 160.1 L375.5 166.6 L365.7 172.8 L355.3 178.1 L344.6 183.3 L334.4 188.8 L325.9 195.6 L317.9 202.2 L309.7 207.9 L300.9 213.2 L291.9 219.0 L283.8 226.5 L276.2 234.6 L268.4 242.6 L259.8 250.1 L250.8 257.9 L242.2 266.6 L234.2 275.9 L227.0 285.2 L219.8 293.7 L212.8 301.8 L205.9 309.8 L199.5 318.4 L193.9 327.4 L188.7 336.4 L183.9 345.5 L178.2 354.4 L172.1 363.8 L166.2 374.1 L161.0 385.2 L156.6 396.3 L151.5 406.7 L145.9 416.7 L140.6 427.0 L136.7 437.9 L134.2 448.9 L131.7 459.1 L128.7 468.5 L125.3 478.0 L123.0 488.5 L121.6 499.8 L120.3 511.1 L118.3 522.1 L115.3 532.8 L113.1 544.1 L111.4 556.2 L110.3 568.5 L109.5 580.2 L108.5 591.0 L108.1 601.3 L108.1 612.0 L108.9 623.1 L110.4 634.2 L112.2 644.8 L113.8 654.8 L114.8 665.2 L115.9 676.5 L117.5 688.5 L120.0 700.4 L122.2 711.6 L123.6 722.4 L125.0 733.3 L127.1 744.8 L131.3 756.0 L135.7 766.5 L139.8 776.0 L143.4 785.3 L147.5 795.0 L153.0 805.2 L158.9 815.5 L164.3 825.5 L168.8 835.1 L173.1 844.8 L178.1 855.0 L183.8 865.8 L189.7 876.3 L195.3 885.8 L201.1 894.3 L207.3 902.6 L214.4 911.5 L222.3 920.4 L230.3 928.8 L238.6 935.7 L246.2 942.7 L253.7 950.5 L261.8 959.2 L270.2 967.9 L278.7 975.5 L286.3 982.6 L293.6 989.9 L301.3 997.7 L310.3 1005.3 L320.1 1011.9 L329.7 1017.5 L338.8 1022.6 L348.0 1027.9 L358.3 1033.2 L369.4 1038.5 L380.2 1043.5 L390.2 1048.0 L399.3 1052.8 L409.0 1057.3 L419.1 1062.6 L429.5 1067.8 L439.7 1072.3 L449.3 1075.9 L459.1 1078.5 L469.6 1081.6 L481.1 1084.9 L493.0 1087.6 L504.5 1089.0 L515.6 1089.6 L526.5 1090.7 L537.9 1092.7 L549.6 1095.2 L561.1 1096.5 L571.6 1097.1 L581.5 1097.7 L591.6 1098.9 L602.5 1100.6 L613.9 1100.9 L625.2 1100.1 L636.1 1098.6 L646.9 1097.1 L658.3 1095.9 L670.5 1094.2 L682.7 1092.3 L694.2 1089.7 L704.9 1087.2 L715.1 1084.8 L725.7 1082.8 L736.6 1081.0 L747.2 1078.8 L757.2 1075.8 L766.5 1071.8 L776.2 1068.0 L786.9 1064.4 L798.2 1060.5 L809.3 1055.7 L819.3 1049.3 L829.2 1043.1 L839.4 1037.8 L850.2 1033.1 L860.6 1028.0 L869.8 1021.7 L878.0 1015.3 L886.2 1009.6 L895.0 1004.5 L904.0 999.0 L912.6 992.1 L920.8 984.4 L928.8 976.5 L937.3 969.0 L946.1 961.2 L955.2 953.1 L963.8 944.3 L971.5 935.3 L978.8 926.8 L985.5 918.5 L992.7 910.7 L999.6 902.8 L1005.9 894.1 L1011.2 885.0 L1016.1 875.8 L1021.8 867.1 L1028.3 858.1 L1034.8 848.3 L1040.3 837.4 L1045.0 826.1 L1050.1 815.6 L1055.9 805.8 L1061.8 795.9 L1066.1 785.3 L1069.2 774.4 L1071.8 764.0 L1074.9 754.5 L1078.6 745.2 L1081.2 735.1 L1083.3 724.1 L1085.1 712.6 L1087.2 701.5 L1090.0 690.7 L1092.6 679.6 L1095.0 667.9 L1096.7 655.7 L1097.9 643.7 L1098.6 632.7 L1099.2 622.3 L1099.8 612.0 L1099.8 601.1 L1098.9 589.9 L1098.6 587.1"/>
+<path d="M461.5 490.2 L462.6 484.1 L463.5 477.8 L463.9 471.0 L464.1 464.2 L464.5 458.0 L465.3 452.2 L465.9 446.2 L466.0 439.5 L465.4 432.1 L464.6 424.5 L464.4 417.4 L464.7 410.7 L465.2 403.9 L465.4 396.7 L465.4 389.2 L465.6 382.2 L465.9 379.0 L470.0 385.8 L474.1 392.8 L477.8 399.4 L480.8 405.3 L483.4 411.1 L486.4 417.3 L489.6 423.7 L492.8 429.8 L495.4 435.2 L497.7 440.1 L500.2 445.2 L501.7 448.0 L503.6 448.1 L507.9 442.7 L512.2 437.3 L516.1 431.5 L519.6 425.6 L523.4 420.2 L527.6 415.3 L531.9 410.6 L535.7 405.3 L538.7 399.2 L541.4 392.7 L544.3 386.6 L546.0 383.7 L545.9 390.5 L545.7 397.0 L545.1 403.0 L544.4 408.9 L544.1 415.3 L544.6 422.6 L545.4 430.3 L545.9 437.7 L545.7 444.5 L545.1 451.2 L544.7 458.1 L544.6 465.4 L544.5 472.6 L543.9 479.1 L542.7 484.9 L541.5 490.6 L541.2 493.6"/>
+<path d="M568.3 489.4 L571.1 482.7 L574.3 475.8 L577.2 468.5 L579.4 461.2 L581.2 454.4 L583.0 448.5 L585.3 442.8 L587.6 436.7 L589.3 429.9 L590.5 422.8 L591.5 416.1 L593.1 409.7 L595.5 403.0 L598.2 395.7 L600.6 387.9 L602.6 380.1 L604.7 373.1 L606.0 373.2 L608.9 380.5 L611.9 387.6 L614.4 394.3 L616.0 401.0 L617.3 408.2 L618.8 416.0 L620.8 423.6 L623.0 430.5 L624.8 436.7 L626.2 442.6 L627.8 449.0 L630.2 455.8 L633.2 462.5 L636.4 468.7 L638.9 474.7 L641.0 481.0 L642.9 488.2"/>
+<path d="M582.0 448.0 L589.9 448.9 L598.0 449.2 L605.6 448.8 L612.7 448.4 L619.7 448.3 L627.2 448.4 L629.1 448.4"/>
+<path d="M603.4 357.6 L605.6 350.7 L608.1 344.5 L611.5 338.5 L615.5 332.1 L616.5 330.4"/>
+<path d="M664.3 493.9 L663.8 486.6 L663.6 479.1 L663.7 472.0 L663.6 465.3 L662.9 458.7 L661.7 451.7 L660.7 444.4 L660.5 437.3 L660.9 431.0 L661.3 425.3 L661.4 419.5 L661.2 413.2 L661.2 406.4 L661.8 399.6 L662.6 393.2 L662.8 386.9 L662.6 383.7 L665.4 389.0 L668.0 393.7 L671.1 398.5 L674.6 403.9 L678.0 409.9 L681.0 416.1 L683.9 421.9 L687.1 427.4 L691.2 433.3 L695.7 439.7 L700.0 446.4 L701.9 449.7 L703.5 449.8 L706.6 443.8 L709.8 437.2 L713.4 430.8 L717.0 424.9 L719.9 419.0 L722.2 412.9 L724.4 406.3 L727.2 399.7 L730.7 393.8 L734.4 388.7 L737.8 383.7 L739.3 381.1 L739.3 388.0 L739.8 394.5 L740.8 401.3 L741.9 408.4 L742.4 415.5 L742.1 422.1 L741.5 427.9 L741.2 433.6 L741.4 439.6 L741.5 446.3 L741.1 453.3 L740.4 459.9 L740.0 466.3 L740.3 472.8 L741.3 480.0 L742.3 487.6 L742.6 491.5"/>
+<path d="M326.1 569.6 L316.3 561.7 L306.3 557.6 L296.6 556.1 L286.6 556.8 L276.3 560.1 L266.7 567.1 L260.0 577.5 L257.4 585.4 L255.2 593.5 L252.9 602.3 L251.3 613.0 L251.1 625.0 L252.1 636.7 L253.3 647.2 L254.2 657.1 L255.8 667.0 L259.2 676.3 L265.5 685.7 L274.2 692.9 L283.1 697.3 L292.9 699.5 L303.8 699.0 L314.8 694.8 L324.0 686.8 L327.6 681.9"/>
+<path d="M349.1 701.1 L350.7 693.3 L353.3 685.7 L356.8 677.3 L360.6 667.9 L363.8 658.1 L366.5 648.7 L369.5 640.2 L373.0 632.1 L376.9 623.6 L380.3 614.7 L382.5 606.0 L384.1 598.1 L385.9 590.9 L388.4 583.7 L391.3 575.7 L394.0 566.8 L396.1 557.8 L397.0 557.7 L399.2 566.3 L402.3 575.0 L406.2 583.0 L409.8 590.4 L412.7 597.8 L414.8 606.0 L417.0 615.3 L419.8 624.8 L422.6 633.8 L424.8 642.4 L426.2 651.0 L427.2 660.2 L428.9 669.8 L431.7 678.9 L434.9 687.1 L437.8 694.4 L440.2 701.9"/>
+<path d="M368.9 648.8 L378.4 649.3 L387.2 650.1 L396.0 650.6 L405.3 650.2 L414.9 649.0 L423.9 647.9 L426.1 647.8"/>
+<path d="M458.1 562.9 L459.5 571.2 L461.1 579.9 L462.0 588.3 L462.0 596.1 L461.9 603.8 L462.3 612.2 L463.0 621.7 L463.3 631.6 L462.7 641.1 L461.6 649.9 L460.9 658.4 L461.2 667.3 L462.2 676.5 L463.0 685.6 L463.3 693.8 L463.4 697.6"/>
+<path d="M544.3 701.2 L546.6 692.5 L548.3 684.9 L550.2 677.8 L552.6 670.6 L555.2 662.8 L557.4 654.8 L559.0 647.2 L560.6 640.1 L563.1 633.0 L566.5 625.1 L570.3 616.2 L573.5 607.1 L576.1 598.5 L578.5 590.5 L581.5 582.7 L584.8 574.4 L587.7 565.8 L588.8 565.6 L590.1 573.7 L591.2 582.7 L592.8 592.1 L595.2 600.8 L598.0 608.7 L600.4 616.3 L602.4 624.3 L604.6 632.6 L607.6 640.7 L611.3 648.1 L614.8 654.9 L617.5 661.8 L619.4 669.6 L621.1 678.2 L623.4 686.8 L625.9 695.0 L628.1 702.9"/>
+<path d="M558.7 654.9 L566.0 654.4 L573.8 653.2 L582.6 652.1 L592.0 651.9 L601.3 652.4 L610.0 652.9 L612.0 653.0"/>
+<path d="M726.0 569.4 L718.2 560.3 L708.0 553.2 L696.9 549.2 L686.4 549.6 L677.3 554.6 L669.1 563.3 L661.3 573.6 L657.0 581.7 L654.2 591.1 L652.8 601.7 L651.7 612.2 L650.2 621.6 L649.0 630.5 L649.4 640.2 L651.3 650.5 L653.6 660.2 L656.2 668.5 L660.6 677.6 L668.9 687.7 L679.3 695.6 L689.9 699.4 L699.7 698.7 L709.2 694.0 L718.7 686.8 L723.2 682.3"/>
+<path d="M757.8 563.0 L757.0 571.5 L756.7 580.5 L756.3 589.8 L755.4 598.8 L754.0 606.8 L753.0 614.0 L753.0 621.4 L753.8 629.5 L754.5 638.3 L754.6 646.9 L754.3 655.0 L754.0 663.0 L754.3 671.6 L754.7 681.1 L754.5 690.9 L753.3 700.3 L752.5 704.6"/>
+<path d="M778.4 563.5 L786.5 563.8 L794.9 564.1 L803.0 563.9 L810.8 563.2 L818.6 563.0 L827.2 563.7 L836.5 565.2 L845.8 566.6 L854.3 567.4 L862.0 567.6"/>
+<path d="M820.5 564.1 L818.9 573.5 L817.5 582.4 L817.0 590.6 L817.3 598.6 L817.8 607.0 L817.8 615.8 L817.4 624.3 L817.2 631.9 L817.6 638.9 L818.3 646.0 L818.5 653.8 L817.6 662.3 L816.2 670.9 L814.9 679.1 L814.3 687.0 L814.1 695.3 L813.9 699.8"/>
+<path d="M885.6 551.6 L885.2 560.4 L884.7 568.5 L884.7 576.1 L885.2 584.1 L885.4 593.1 L884.9 603.0 L884.2 612.9 L884.1 622.1 L885.1 630.8 L886.7 639.8 L888.0 649.3 L888.8 657.3 L891.0 667.4 L895.1 675.5 L901.4 681.9 L908.7 687.3 L916.1 691.7 L923.2 694.3 L930.5 694.4 L938.2 691.9 L944.1 688.6 L951.6 683.4 L957.5 677.5 L961.5 670.4 L964.2 661.4 L966.2 650.9 L967.3 641.2 L967.9 632.4 L967.4 623.9 L966.4 614.8 L965.5 604.9 L965.1 594.7 L964.8 585.2 L964.0 576.7 L962.5 568.8 L960.9 560.7 L960.2 551.9 L960.3 547.4"/>
+</g><g fill="currentColor" stroke="currentColor" stroke-width="4.95" stroke-linejoin="round">
+<path d="M461.9 631.2 L459.5 558.3 L464.2 556.8 L468.9 555.9 L473.7 555.5 L478.5 555.6 L483.3 556.2 L488.1 557.4 L490.4 558.2 L488.3 560.1 L492.1 570.5 L495.1 582.0 L497.2 594.4 L498.4 607.9 L498.7 622.4 L498.6 630.1 Z"/>
+<path d="M504.8 629.9 L504.9 614.8 L504.1 600.8 L502.5 587.9 L500.0 575.9 L496.6 565.0 L493.3 559.4 L498.5 562.1 L503.5 565.4 L508.2 569.4 L512.7 573.9 L516.7 579.0 L520.4 584.6 L523.7 590.6 L526.5 597.1 L528.9 603.8 L530.7 610.8 L532.0 618.0 L532.8 625.3 L533.0 629.0 Z"/>
+<path d="M513.0 628.9 L541.5 628.7 L561.6 633.7 L577.5 641.7 L574.9 648.2 L550.5 644.0 L513.4 639.5 Z"/>
+<circle cx="492.6" cy="552.1" r="9.4"/>
+</g></svg>
+</template>
+
+<script>
+(function(){
+  // Hlášky a barvy – uprav podle skutečné nabídky
+  const PRICE = 390;
+  const QUOTES = [
+    {t:"Lhůta běží. Já ne.", p:"Právníci"},
+    {t:"In dubio pro kafe", p:"Právníci"},
+    {t:"Usnesení: jdu domů.", p:"Právníci"},
+    {t:"To záleží.", p:"Právníci"},
+    {t:"Kampaň běží. Já taky.", p:"Markeťáci"},
+    {t:"final_final_v7.pdf", p:"Markeťáci"},
+    {t:"Dosah: 3 lidi a máma.", p:"Markeťáci"},
+    {t:"Algoritmus mě nemá rád.", p:"Markeťáci"},
+    {t:"Doktoři – už se šije", p:"Brzy", soon:true}
+  ];
+  // [název, barva vzorníku, boční fotka (nebo null), barva nitě]
+  const COLORS = [
+    ["Džínová modrá","#47536d",null,"#f4efe2"],
+    ["Grafitová","#67686d",null,"#f4efe2"],
+    ["Lahvově zelená","#4a5f54",null,"#f4efe2"],
+    ["Šedozelená","#839192",null,"#f4efe2"],
+    ["Královská modrá","#388ad7",null,"#f4efe2"],
+    ["Písková","#b79e7e",null,"#1b1b1b"],
+    ["Přírodní","#e0d6bd",null,"#1b1b1b"],
+    ["Hořčicová","#e6b62f",null,"#1b1b1b"],
+    ["Lososová","#ed926b",null,"#f4efe2"],
+    ["Červená","#b53e40",null,"#f4efe2"],
+    ["Růžová","#d792a5",null,"#1b1b1b"]
+  ];
+  // Hotové náhledy výšivek: MOCKUPS[index hlášky][index barvy]
+  const MOCKUPS = {"0": {"0": "img/q0-c0.jpg", "1": "img/q0-c1.jpg", "10": "img/q0-c10.jpg", "2": "img/q0-c2.jpg", "3": "img/q0-c3.jpg", "4": "img/q0-c4.jpg", "5": "img/q0-c5.jpg", "6": "img/q0-c6.jpg", "7": "img/q0-c7.jpg", "8": "img/q0-c8.jpg", "9": "img/q0-c9.jpg"}, "1": {"0": "img/q1-c0.jpg", "1": "img/q1-c1.jpg", "10": "img/q1-c10.jpg", "2": "img/q1-c2.jpg", "3": "img/q1-c3.jpg", "4": "img/q1-c4.jpg", "5": "img/q1-c5.jpg", "6": "img/q1-c6.jpg", "7": "img/q1-c7.jpg", "8": "img/q1-c8.jpg", "9": "img/q1-c9.jpg"}, "2": {"0": "img/q2-c0.jpg", "1": "img/q2-c1.jpg", "10": "img/q2-c10.jpg", "2": "img/q2-c2.jpg", "3": "img/q2-c3.jpg", "4": "img/q2-c4.jpg", "5": "img/q2-c5.jpg", "6": "img/q2-c6.jpg", "7": "img/q2-c7.jpg", "8": "img/q2-c8.jpg", "9": "img/q2-c9.jpg"}, "3": {"0": "img/q3-c0.jpg", "1": "img/q3-c1.jpg", "10": "img/q3-c10.jpg", "2": "img/q3-c2.jpg", "3": "img/q3-c3.jpg", "4": "img/q3-c4.jpg", "5": "img/q3-c5.jpg", "6": "img/q3-c6.jpg", "7": "img/q3-c7.jpg", "8": "img/q3-c8.jpg", "9": "img/q3-c9.jpg"}, "4": {"0": "img/q4-c0.jpg", "1": "img/q4-c1.jpg", "10": "img/q4-c10.jpg", "2": "img/q4-c2.jpg", "3": "img/q4-c3.jpg", "4": "img/q4-c4.jpg", "5": "img/q4-c5.jpg", "6": "img/q4-c6.jpg", "7": "img/q4-c7.jpg", "8": "img/q4-c8.jpg", "9": "img/q4-c9.jpg"}, "5": {"0": "img/q5-c0.jpg", "1": "img/q5-c1.jpg", "10": "img/q5-c10.jpg", "2": "img/q5-c2.jpg", "3": "img/q5-c3.jpg", "4": "img/q5-c4.jpg", "5": "img/q5-c5.jpg", "6": "img/q5-c6.jpg", "7": "img/q5-c7.jpg", "8": "img/q5-c8.jpg", "9": "img/q5-c9.jpg"}, "6": {"0": "img/q6-c0.jpg", "1": "img/q6-c1.jpg", "10": "img/q6-c10.jpg", "2": "img/q6-c2.jpg", "3": "img/q6-c3.jpg", "4": "img/q6-c4.jpg", "5": "img/q6-c5.jpg", "6": "img/q6-c6.jpg", "7": "img/q6-c7.jpg", "8": "img/q6-c8.jpg", "9": "img/q6-c9.jpg"}, "7": {"0": "img/q7-c0.jpg", "1": "img/q7-c1.jpg", "10": "img/q7-c10.jpg", "2": "img/q7-c2.jpg", "3": "img/q7-c3.jpg", "4": "img/q7-c4.jpg", "5": "img/q7-c5.jpg", "6": "img/q7-c6.jpg", "7": "img/q7-c7.jpg", "8": "img/q7-c8.jpg", "9": "img/q7-c9.jpg"}};
+
+  const $ = id => document.getElementById(id);
+  // logo
+  const tpl = $("logoTpl");
+  document.querySelectorAll(".logo-slot").forEach(s => s.appendChild(tpl.content.cloneNode(true)));
+
+  let state = {q:2, c:7, n:1};
+  let basket = [];
+  try { const saved = JSON.parse(localStorage.getItem("mc-basket")||"[]"); if (Array.isArray(saved)) basket = saved.filter(i => QUOTES[i.q] && COLORS[i.c] && i.n>0); } catch(e) {}
+  const save = () => { try { localStorage.setItem("mc-basket", JSON.stringify(basket)); } catch(e) {} };
+
+  function shade(hex, f){
+    const n = parseInt(hex.slice(1),16); let r=n>>16,g=n>>8&255,b=n&255;
+    r=Math.round(r*f); g=Math.round(g*f); b=Math.round(b*f);
+    return "#"+((1<<24)+(Math.min(255,r)<<16)+(Math.min(255,g)<<8)+Math.min(255,b)).toString(16).slice(1);
+  }
+  function lum(hex){ const n=parseInt(hex.slice(1),16); return (0.299*(n>>16)+0.587*(n>>8&255)+0.114*(n&255))/255; }
+  function splitQuote(t){
+    if (t.length <= 15) return [t, ""];
+    const words = t.split(" "); let a="", i=0;
+    while (i<words.length && (a+" "+words[i]).trim().length <= Math.ceil(t.length/2)+2) { a=(a+" "+words[i]).trim(); i++; }
+    if (!a) return [t,""];
+    return [a, words.slice(i).join(" ")];
+  }
+
+  // quotes
+  const qWrap = $("quotes");
+  QUOTES.forEach((q,i) => {
+    if (q.soon) return;
+    const b = document.createElement("button");
+    b.type="button"; b.className="q"; b.id="quote-"+i; b.dataset.i=i; b.dataset.role=q.p;
+    b.innerHTML = '<span class="th"></span><span class="t"></span>';
+    b.querySelector(".t").textContent = q.t;
+    const ti = document.createElement("img"); ti.alt = ""; b.querySelector(".th").appendChild(ti);
+    b.addEventListener("click", () => { state.q=i; render(); });
+    qWrap.appendChild(b);
+  });
+  // roles
+  const ROLES = [
+    {id:"Právníci", label:"Právník"},
+    {id:"Markeťáci", label:"Markeťák"},
+    {id:"Doktoři", label:"Doktor", soon:true}
+  ];
+  const rWrap = $("roles");
+  ROLES.forEach(r => {
+    const b = document.createElement("button");
+    b.type="button"; b.className="role"; b.id="role-"+r.id; b.dataset.role=r.id;
+    b.textContent = r.label;
+    if (r.soon) { b.disabled = true; const s=document.createElement("small"); s.textContent="už se šije"; b.appendChild(s); }
+    else b.addEventListener("click", () => {
+      if (QUOTES[state.q].p === r.id) return;
+      state.q = QUOTES.findIndex(q => q.p === r.id && !q.soon); render();
+    });
+    rWrap.appendChild(b);
+  });
+  // swatches
+  const sWrap = $("swatches");
+  COLORS.forEach(([name,hex],i) => {
+    const b = document.createElement("button");
+    b.type="button"; b.className="sw"; b.id="color-"+i; b.style.background=hex;
+    b.setAttribute("aria-label", name); b.title = name;
+    b.addEventListener("click", () => { state.c=i; render(); });
+    sWrap.appendChild(b);
+  });
+
+  function render(){
+    const role = QUOTES[state.q].p;
+    document.querySelectorAll(".role").forEach(b=>{ if(!b.disabled) b.setAttribute("aria-pressed", b.dataset.role===role); });
+    document.querySelectorAll(".q").forEach(b=>{
+      const i = +b.dataset.i;
+      b.hidden = b.dataset.role !== role;
+      b.setAttribute("aria-pressed", i===state.q);
+      const ti = b.querySelector(".th img"), m = (MOCKUPS[i]||{})[state.c];
+      if (ti && m && ti.getAttribute("src") !== m) ti.src = m;
+    });
+    document.querySelectorAll(".sw").forEach((b,i)=>b.setAttribute("aria-pressed", i===state.c));
+    const [name,hex,img,thread] = COLORS[state.c];
+    $("colorName").textContent = name;
+    const im = $("capImg"), photo = $("photo"), t = $("capText"), q = QUOTES[state.q].t;
+    const mock = (MOCKUPS[state.q] || {})[state.c];
+    const src = mock || img;
+    photo.classList.toggle("mock", !!mock);
+    photo.classList.toggle("flat", !src);
+    photo.style.setProperty("--cap", hex);
+    im.hidden = !src;
+    if (src && im.getAttribute("src") !== src) im.src = src;
+    im.alt = "Kšiltovka v barvě " + name + " s nápisem " + q;
+    t.hidden = !!mock;
+    t.textContent = q; t.style.color = thread;
+    t.classList.toggle("long", q.length > 17);
+    $("pvNote").hidden = !!mock;
+    $("pvQuote").firstChild.textContent = QUOTES[state.q].t;
+    $("pvColor").textContent = name;
+    $("qOut").textContent = state.n;
+  }
+
+  $("qMinus").addEventListener("click", ()=>{ state.n=Math.max(1,state.n-1); render(); });
+  $("qPlus").addEventListener("click", ()=>{ state.n=Math.min(50,state.n+1); render(); });
+
+  function toast(msg){
+    const t=$("toast"); t.textContent=msg; t.hidden=false;
+    clearTimeout(toast._t); toast._t=setTimeout(()=>t.hidden=true, 2200);
+  }
+
+  $("addBtn").addEventListener("click", ()=>{
+    const ex = basket.find(i=>i.q===state.q && i.c===state.c);
+    if (ex) ex.n += state.n; else basket.push({q:state.q,c:state.c,n:state.n});
+    state.n = 1; save(); render(); renderBasket();
+    toast("Přidáno do rezervace");
+  });
+
+  function renderBasket(){
+    const w = $("items"); w.innerHTML="";
+    if (!basket.length){
+      w.innerHTML='<div class="empty"><span class="hand">Zatím prázdno</span>Vyber hlášku a barvu výš a přidej ji sem.</div>';
+    } else {
+      basket.forEach((it,idx)=>{
+        const row=document.createElement("div"); row.className="item";
+        row.innerHTML='<span class="dot"></span><div><div class="t"></div><div class="c"></div></div><span class="n"></span><button class="x" type="button">×</button>';
+        row.querySelector(".dot").style.background = COLORS[it.c][1];
+        row.querySelector(".t").textContent = QUOTES[it.q].t;
+        row.querySelector(".c").textContent = COLORS[it.c][0];
+        row.querySelector(".n").textContent = it.n+" × "+PRICE+" Kč";
+        const x=row.querySelector(".x"); x.setAttribute("aria-label","Odebrat "+QUOTES[it.q].t);
+        x.addEventListener("click",()=>{ basket.splice(idx,1); save(); renderBasket(); });
+        w.appendChild(row);
+      });
+      const pcs = basket.reduce((s,i)=>s+i.n,0);
+      const tot=document.createElement("div"); tot.className="total";
+      tot.innerHTML='<span></span><span></span>';
+      tot.children[0].textContent = "Celkem "+pcs+" ks";
+      tot.children[1].textContent = (pcs*PRICE).toLocaleString("cs-CZ")+" Kč";
+      w.appendChild(tot);
+    }
+    $("submitBtn").disabled = !basket.length;
+  }
+
+  // Adresa Google Apps Scriptu, který ukládá rezervace do tabulky
+  const SHEET_URL = "";
+  function showFallback(text){
+    $("summary").textContent = text;
+    $("resForm").hidden = true; $("sent").hidden = true; $("done").hidden = false;
+  }
+  $("resForm").addEventListener("submit", e=>{
+    e.preventDefault();
+    const name=$("fName").value.trim(), contact=$("fContact").value.trim(), note=$("fNote").value.trim();
+    if (!basket.length){ $("fErr").textContent="Přidej do rezervace aspoň jednu kšiltovku."; return; }
+    if (!name || !contact){ $("fErr").textContent="Vyplň jméno a e-mail nebo Instagram, ať ti mám kam napsat."; return; }
+    if ($("fWeb").value) return;
+    $("fErr").textContent="";
+    const pcs = basket.reduce((s,i)=>s+i.n,0);
+    const lines = basket.map(i=>"• "+i.n+"× "+QUOTES[i.q].t+" – "+COLORS[i.c][0]);
+    const total = (pcs*PRICE).toLocaleString("cs-CZ")+" Kč";
+    const text = "ČEPICE – rezervace\n\n"+lines.join("\n")+"\n\nCelkem: "+pcs+" ks / "+total+"\nJméno: "+name+"\nKontakt: "+contact+(note?"\nPoznámka: "+note:"");
+    if (!/^https:\/\//.test(SHEET_URL)) { showFallback(text); return; }
+    const btn=$("submitBtn"); btn.disabled=true; btn.textContent="Odesílám…";
+    const body = new URLSearchParams({jmeno:name, kontakt:contact, poznamka:note,
+      polozky: basket.map(i=>i.n+"× "+QUOTES[i.q].t+" – "+COLORS[i.c][0]).join("\n"),
+      kusy: String(pcs), cena: String(pcs*PRICE)});
+    fetch(SHEET_URL, {method:"POST", mode:"no-cors", body})
+      .then(()=>{
+        $("sentMsg").textContent = "Díky, "+name+"! Rezervace dorazila. Ozvu se ti na "+contact+" s termínem dodání a platbou.";
+        $("sentSummary").textContent = lines.join("\n")+"\n\nCelkem: "+pcs+" ks / "+total;
+        $("resForm").hidden = true; $("done").hidden = true; $("sent").hidden = false;
+        basket = []; save(); renderBasket();
+        $("resForm").reset();
+      })
+      .catch(()=>{ toast("Odeslání se nepovedlo, pošli mi rezervaci přes Instagram."); showFallback(text); })
+      .finally(()=>{ btn.textContent="Odeslat rezervaci"; btn.disabled = !basket.length; });
+  });
+  $("backBtn").addEventListener("click", ()=>{ $("done").hidden=true; $("resForm").hidden=false; });
+  $("againBtn").addEventListener("click", ()=>{ $("sent").hidden=true; $("resForm").hidden=false; location.hash="vyber"; });
+  $("copyBtn").addEventListener("click", ()=>{
+    const text=$("summary").textContent;
+    const fallback=()=>{ const r=document.createRange(); r.selectNodeContents($("summary")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast("Označeno – zkopíruj Ctrl/Cmd + C"); };
+    try { navigator.clipboard.writeText(text).then(()=>toast("Zkopírováno"), fallback); } catch(e){ fallback(); }
+  });
+
+  render(); renderBasket();
+})();
+</script>
+
+</body>
+</html>
