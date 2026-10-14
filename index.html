@@ -365,7 +365,7 @@ footer .hand{font-size:30px;color:var(--ink)}
       <details><summary>Jakou má kšiltovka velikost?</summary><p>Univerzální. Vzadu je látkový pásek s kovovým zapínáním, takže sedne většině hlav, i těm přetíženým.</p></details>
       <details><summary>Jak se o ni starat?</summary><p>Jen ruční praní. Nežehlit, nesušit v sušičce a nečistit chemicky. Výšivka ti tak vydrží.</p></details>
       <details><summary>Kdo hlášky vymýšlí?</summary><p>Míša. Studuje práva, dělá marketing a každý nápis píše ručně, než jde do výšivky.</p></details>
-      <details><summary>Kdy přijdou doktoři?</summary><p>Už se na tom pracuje. Napiš do poznámky, jakou hlášku bys chtěl/a, nebo jakou profesi dál.</p></details>
+      <details><summary>Přibydou další profese?</summary><p>Ano, další profese jsou v procesu. Napiš do poznámky, jakou profesi nebo hlášku bys chtěl/a vidět.</p></details>
       <details><summary>Hromadná objednávka?</summary><p>Jasně. Přidej do rezervace víc kusů a barev a napiš do poznámky název kanceláře.</p></details>
     </div>
   </section>
@@ -480,14 +480,14 @@ footer .hand{font-size:30px;color:var(--ink)}
   const ROLES = [
     {id:"Právníci", label:"Právník"},
     {id:"Markeťáci", label:"Markeťák"},
-    {id:"Doktoři", label:"Doktor", soon:true}
+    {id:"Další", label:"Další profese", soon:true}
   ];
   const rWrap = $("roles");
   ROLES.forEach(r => {
     const b = document.createElement("button");
     b.type="button"; b.className="role"; b.id="role-"+r.id; b.dataset.role=r.id;
     b.textContent = r.label;
-    if (r.soon) { b.disabled = true; const s=document.createElement("small"); s.textContent="už se šije"; b.appendChild(s); }
+    if (r.soon) { b.disabled = true; const s=document.createElement("small"); s.textContent="v procesu"; b.appendChild(s); }
     else b.addEventListener("click", () => {
       if (QUOTES[state.q].p === r.id) return;
       state.q = QUOTES.findIndex(q => q.p === r.id && !q.soon); render();
