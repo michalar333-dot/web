@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <style>*{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
 <title>Kšiltovky s hláškou pro právníky a markeťáky | mám capacitu</title>
-<meta name="description" content="Kšiltovky s vyšitou ručně psanou hláškou pro právníky a markeťáky. Vintage bavlna, 11 barev, předprodej 390 Kč, rezervace zdarma. Tip na dárek pro kolegu.">
+<meta name="description" content="Kšiltovky s vyšitou ručně psanou hláškou pro právníky a markeťáky. Vintage bavlna, 11 barev, předprodej 390 Kč, rezervace zdarma. Dárek pro právníka i markeťáka.">
 <link rel="canonical" href="https://mamcapacitu.cz/">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="author" content="Michala Reiserová">
@@ -13,7 +13,7 @@
 <meta property="og:locale" content="cs_CZ">
 <meta property="og:site_name" content="mám capacitu">
 <meta property="og:title" content="mám capacitu – Kapacitu nemám. Capacitu jo.">
-<meta property="og:description" content="Kšiltovky s vyšitou ručně psanou hláškou pro právníky a markeťáky. Vintage bavlna, 11 barev, předprodej 390 Kč, rezervace zdarma. Tip na dárek pro kolegu.">
+<meta property="og:description" content="Kšiltovky s vyšitou ručně psanou hláškou pro právníky a markeťáky. Vintage bavlna, 11 barev, předprodej 390 Kč, rezervace zdarma. Dárek pro právníka i markeťáka.">
 <meta property="og:image" content="https://mamcapacitu.cz/img/og.jpg">
 <meta property="og:image:alt" content="Hořčicová kšiltovka s vyšitou hláškou Usnesení: jdu domů.">
 <meta property="og:url" content="https://mamcapacitu.cz/">
@@ -208,6 +208,7 @@ footer .hand{font-size:30px;color:var(--ink)}
     <nav>
       <a href="#vyber">Vybrat čepici</a>
       <a href="#kstiltovka">Kšiltovka</a>
+      <a href="#darky">Dárky</a>
       <a href="#rezervace">Rezervace</a>
       <a href="#faq">Otázky</a>
       <a href="https://www.instagram.com/mamcapacitu.cz/" target="_blank" rel="noopener">Instagram</a>
@@ -365,6 +366,25 @@ footer .hand{font-size:30px;color:var(--ink)}
     </div>
   </section>
 
+  <section id="darky">
+    <div class="sec-h">
+      <h2>Dárek, co mluví za tebe</h2>
+      <p>Pro kolegy, co mají plno.</p>
+    </div>
+    <div class="spec">
+      <div>
+        <h3>Dárek pro právníka</h3>
+        <p style="margin:0 0 10px">Hledáš dárek pro právníka, advokáta, koncipienta nebo studenta práv? Kšiltovka s hláškou Lhůta běží. Já ne., In dubio pro kafe, Usnesení: jdu domů. nebo To záleží. pobaví celou kancelář. Hodí se k atestacím, ke státnicím, k promoci i pod stromeček.</p>
+        <a href="darek-pro-pravnika.html">Dárek pro právníka →</a>
+      </div>
+      <div>
+        <h3>Dárek pro markeťáka</h3>
+        <p style="margin:0 0 10px">Dárek pro markeťáka, social media manažerku nebo celý marketingový tým: Kampaň běží. Já taky., final_final_v7.pdf, Dosah: 3 lidi a máma. nebo Algoritmus mě nemá rád. Ideální po spuštění kampaně nebo na vánoční večírek.</p>
+        <a href="darek-pro-marketaka.html">Dárek pro markeťáka →</a>
+      </div>
+    </div>
+  </section>
+
   <section id="faq">
     <div class="sec-h"><h2>Otázky</h2></div>
     <div class="faq">
@@ -457,6 +477,7 @@ footer .hand{font-size:30px;color:var(--ink)}
   document.querySelectorAll(".logo-slot").forEach(s => s.appendChild(tpl.content.cloneNode(true)));
 
   let state = {q:2, c:7, n:1};
+  try { const h=location.hash.slice(1); if (h==="pravnik") state.q=0; if (h==="marketak") state.q=4; } catch(e) {}
   let basket = [];
   try { const saved = JSON.parse(localStorage.getItem("mc-basket")||"[]"); if (Array.isArray(saved)) basket = saved.filter(i => QUOTES[i.q] && COLORS[i.c] && i.n>0); } catch(e) {}
   const save = () => { try { localStorage.setItem("mc-basket", JSON.stringify(basket)); } catch(e) {} };
